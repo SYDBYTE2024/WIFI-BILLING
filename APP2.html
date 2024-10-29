@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYDBYTE SOLUTIONS - M-Pesa Payment</title>
+    <style>
+        /* Add CSS styling as needed */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 { text-align: center; }
+        .package { margin: 15px 0; padding: 15px; }
+        .pay-btn { padding: 10px; font-size: 18px; background-color: #007b00; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SYDBYTE WiFi Packages</h1>
+        <div class="package">
+            <label>Package A - 1 Day (Ksh 50)</label>
+            <button class="pay-btn" onclick="initiatePayment(50)">Pay Ksh 50</button>
+        </div>
+        <div class="package">
+            <label>Package B - 1 Week (Ksh 300)</label>
+            <button class="pay-btn" onclick="initiatePayment(300)">Pay Ksh 300</button>
+        </div>
+        <div class="package">
+            <label>Package C - 1 Month (Ksh 1000)</label>
+            <button class="pay-btn" onclick="initiatePayment(1000)">Pay Ksh 1000</button>
+        </div>
+    </div>
+
+    <script>
+        function initiatePayment(amount) {
+            const phoneNumber = prompt("Enter your phone number to complete payment:");
+            fetch('process_payment.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: amount, phoneNumber: phoneNumber }),
+            })
+            .then(response => response.json())
+            .then(data => { alert(data.message); })
+            .catch(error => { console.error('Error:', error); });
+        }
+    </script>
+</body>
+</html>
